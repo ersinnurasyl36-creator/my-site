@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ТехноМир — Онлайн технологии</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --accent: #6c63ff;
+      --accent2: #00e5c0;
+      --text: #e8e8f0;
+      --muted: #7a7a9a;
+      --border: rgba(108,99,255,0.2);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.25rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.03em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      transition: color .25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 2px; background: var(--accent2);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.25) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: .7; }
+      50% { transform: translate(-50%,-50%) scale(1.15); opacity: 1; }
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.4);
+      color: var(--accent2);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .45rem 1.1rem; border-radius: 999px;
+      margin-bottom: 1.8rem;
+      animation: fadeDown .7s ease both;
+    }
+    .hero h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.04em;
+      max-width: 800px;
+      animation: fadeDown .7s .15s ease both;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--muted); font-size: 1.1rem; line-height: 1.7;
+      max-width: 520px; margin: 1.5rem auto 2.5rem;
+      animation: fadeDown .7s .3s ease both;
+    }
+    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeDown .7s .45s ease both; }
+    .btn {
+      padding: .85rem 2rem; border-radius: 12px;
+      font-family: 'Manrope', sans-serif; font-size: .95rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #9b8fff);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(108,99,255,0.4);
+    }
+    .btn-primary:hover { box-shadow: 0 12px 40px rgba(108,99,255,0.6); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 5%; }
+    .section-label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent2);
+      margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.15;
+      letter-spacing: -0.03em;
+      max-width: 600px; margin-bottom: 1.2rem;
+    }
+    .section-desc { color: var(--muted); line-height: 1.75; max-width: 540px; font-size: .97rem; }
+
+    /* ── FEATURES ── */
+    #о-нас { background: var(--surface); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem;
+      transition: border-color .3s, transform .3s;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-6px); }
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 1.2rem;
+    }
+    .icon-purple { background: rgba(108,99,255,0.15); }
+    .icon-teal   { background: rgba(0,229,192,0.12); }
+    .icon-pink   { background: rgba(255,99,180,0.12); }
+    .card h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1rem; font-weight: 700; margin-bottom: .6rem;
+    }
+    .card p { color: var(--muted); font-size: .88rem; line-height: 1.65; }
+
+    /* ── TECH SECTION ── */
+    #технологии { background: var(--bg); }
+    .tech-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center; margin-top: 3rem;
+    }
+    @media (max-width: 768px) { .tech-row { grid-template-columns: 1fr; } }
+    .tech-visual {
+      background: var(--surface);
+      border: 1px solid var(--border); border-radius: 24px;
+      padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .tech-visual::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.3) 0%, transparent 70%);
+    }
+    .tech-bar { margin-bottom: 1.2rem; }
+    .tech-bar-label { display: flex; justify-content: space-between; font-size: .82rem; margin-bottom: .4rem; color: var(--muted); }
+    .tech-bar-track { height: 8px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; }
+    .tech-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .tech-list { list-style: none; }
+    .tech-list li {
+      padding: .75rem 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .95rem; color: var(--muted);
+    }
+    .tech-list li:last-child { border-bottom: none; }
+    .tech-list li span { color: var(--accent2); font-size: 1.1rem; }
+
+    /* ── CONTACT ── */
+    #контакты { background: var(--surface); }
+    .contact-box {
+      background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(0,229,192,0.08));
+      border: 1px solid var(--border); border-radius: 28px;
+      padding: 4rem; max-width: 640px; margin: 3rem auto 0;
+      text-align: center;
+    }
+    .contact-box h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: .8rem;
+    }
+    .contact-box p { color: var(--muted); margin-bottom: 2rem; line-height: 1.65; }
+    .contact-email {
+      display: inline-block; padding: .9rem 2.4rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 14px; color: var(--accent2);
+      text-decoration: none; font-weight: 600; font-size: 1rem;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .contact-email:hover { border-color: var(--accent2); box-shadow: 0 0 24px rgba(0,229,192,0.2); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 5%;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: .83rem;
+    }
+    footer strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ТехноМир</div>
+  <ul class="nav-links">
+    <li><a href="#главная">Главная</a></li>
+    <li><a href="#о-нас">О нас</a></li>
+    <li><a href="#технологии">Технологии</a></li>
+    <li><a href="#контакты">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="главная">
+  <div class="hero-glow"></div>
+  <div class="badge">🚀 Онлайн технологии 2026</div>
+  <h1>Будущее начинается<br/>с <span>цифрового мира</span></h1>
+  <p>Мы изучаем, создаём и внедряем онлайн-технологии нового поколения. Простые решения для сложных задач.</p>
+  <div class="btn-group">
+    <a href="#о-нас" class="btn btn-primary">Узнать больше</a>
+    <a href="#контакты" class="btn btn-outline">Связаться</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="о-нас">
+  <div class="section-label">О нас</div>
+  <div class="section-title">Зачем нужны онлайн-технологии?</div>
+  <p class="section-desc">Онлайн-технологии объединяют людей, упрощают обучение и открывают новые возможности для бизнеса и творчества по всему миру.</p>
+  <div class="features-grid">
+    <div class="card">
+      <div class="card-icon icon-purple">🌐</div>
+      <h3>Веб-разработка</h3>
+      <p>HTML, CSS и JavaScript — фундамент каждого сайта. Любой сайт начинается с простого файла index.html.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-teal">☁️</div>
+      <h3>Облачные сервисы</h3>
+      <p>GitHub, Google Drive, Figma — это облачные платформы, которые позволяют работать из любой точки мира.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-pink">🎨</div>
+      <h3>UI/UX Дизайн</h3>
+      <p>Прототипирование в Figma и Canva помогает создавать удобные и красивые интерфейсы до начала разработки.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="технологии">
+  <div class="section-label">Технологии</div>
+  <div class="section-title">Что мы используем</div>
+  <div class="tech-row">
+    <div>
+      <p class="section-desc" style="margin-bottom:2rem;">
+        Современный веб строится на открытых стандартах и инструментах, доступных каждому. Вот основные технологии онлайн-мира:
+      </p>
+      <ul class="tech-list">
+        <li><span>▸</span> HTML — структура страницы</li>
+        <li><span>▸</span> CSS — стили и оформление</li>
+        <li><span>▸</span> JavaScript — интерактивность</li>
+        <li><span>▸</span> GitHub Pages — бесплатный хостинг</li>
+        <li><span>▸</span> Figma / Canva — прототипирование</li>
+      </ul>
+    </div>
+    <div class="tech-visual">
+      <div class="tech-bar">
+        <div class="tech-bar-label"><span>HTML</span><span>95%</span></div>
+        <div class="tech-bar-track"><div class="tech-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="tech-bar">
+        <div class="tech-bar-label"><span>CSS</span><span>88%</span></div>
+        <div class="tech-bar-track"><div class="tech-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="tech-bar">
+        <div class="tech-bar-label"><span>JavaScript</span><span>72%</span></div>
+        <div class="tech-bar-track"><div class="tech-bar-fill" style="width:72%"></div></div>
+      </div>
+      <div class="tech-bar">
+        <div class="tech-bar-label"><span>GitHub</span><span>80%</span></div>
+        <div class="tech-bar-track"><div class="tech-bar-fill" style="width:80%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="контакты">
+  <div class="section-label">Контакты</div>
+  <div class="section-title">Есть вопросы?</div>
+  <div class="contact-box">
+    <h3>Напишите нам 👋</h3>
+    <p>Мы всегда рады помочь. Свяжитесь с нами по электронной почте или через мессенджер — ответим быстро!</p>
+    <a href="mailto:info@tekhnomir.kz" class="contact-email">✉️ info@tekhnomir.kz</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>ТехноМир</strong> — Учебный проект по курсу «Онлайн технология негіздері»</p>
+</footer>
+
+</body>
+</html>
